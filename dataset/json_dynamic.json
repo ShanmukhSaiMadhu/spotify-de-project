@@ -22,7 +22,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().file",
+					"value": "@concat(dataset().file, '_CDC.json')",
 					"type": "Expression"
 				},
 				"folderPath": {
