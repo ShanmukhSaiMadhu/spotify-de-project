@@ -21,7 +21,7 @@ Incremental loop details
 ![Incremental loop](screenshots/incremental_loop.png)
 
 CDC bookmark file  
-![CDC JSON](screenshots/cdc_JSON.png)
+![CDC json](screenshots/cdc_json.png)
 
 Logic App notification  
 ![Logic App](screenshots/logicapp.png)
