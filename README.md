@@ -1,39 +1,35 @@
-# Spotify Data Engineering Project (Azure)
+# Spotify Data Engineering Project
 
-This repo contains a Spotify data pipeline built on Azure. Current milestone completes the Azure Data Factory incremental ingestion into ADLS Gen2 Bronze. Databricks transformations will be added next.
+Azure based data pipeline for Spotify data. Current progress covers Azure Data Factory incremental ingestion into ADLS Gen2 Bronze. Databricks is next.
 
-## What is built so far
+## What it does
 
-1. Parent ADF pipeline loops over a JSON config of tables (schema, table, cdc_col, from_date)
-2. For each table, ADF checks if a bookmark file exists in Bronze: `<table>_CDC.json`
-3. If bookmark exists, ADF reads the last CDC value, else uses a default start date
-4. ADF runs an incremental query with optional override using from_date
-5. ADF copies data from Azure SQL to ADLS Bronze as Parquet with a timestamped filename
-6. ADF updates the bookmark by writing the latest max CDC value
-7. ADF triggers a Logic App notification on successful completion
-8. Code is version controlled in GitHub using dev to main pull requests and ADF publish
+1. Loops through a JSON config of tables
+2. Checks CDC bookmark per table (`<table>_CDC.json`)
+3. Runs incremental query with optional `from_date` override
+4. Copies data from Azure SQL to ADLS Bronze as Parquet
+5. Updates CDC bookmark with latest value
+6. Sends email alert using Logic App
+7. Dev to Main workflow with ADF publish
 
-## Incremental logic
+## Screenshots
 
-Filter used in source query
-
-`WHERE cdc_col > @{if(empty(item().from_date), variables('last_cdc_value'), item().from_date)}`
-
-## ADF screenshots
-
-Pipeline overview
-
+ADF pipeline overview  
 ![ADF pipeline overview](screenshots/adf_pipeline_overview.png)
 
-Web activity calling Logic App
+Incremental loop details  
+![Incremental loop](screenshots/incremental_loop.png)
 
-![ADF alerts](screenshots/adf_alerts_web_activity.png)
+CDC bookmark file  
+![CDC JSON](screenshots/cdc_JSON.png)
 
-Dynamic query with CDC
+Logic App notification  
+![Logic App](screenshots/logicapp.png)
 
-![ADF dynamic query](screenshots/adf_dynamic_query.png)
+Successful run output  
+![Pipeline run](screenshots/pipeline_run.png)
 
 ## Status
 
 ADF completed  
-Next: Databricks bronze to silver to gold
+Next: Databricks transformations
